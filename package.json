@@ -1,0 +1,30 @@
+{
+  "name": "vault-viewer",
+  "version": "0.0.1",
+  "description": "SPA Viewer for Vault.xyz",
+  "main": "main.js",
+  "dependencies": {
+    "vue": "^2.6.10",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.0.2",
+    "poi": "^12.7.3",
+    "xo": "^0.25.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "xo --quiet",
+    "dev": "poi --serve",
+    "release": "standard-version",
+    "commit": "npx git-cz"
+  },
+  "keywords": [],
+  "author": "Alexis Tyler <xo@wvvw.me> (https://wvvw.me/)",
+  "license": "MIT",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
