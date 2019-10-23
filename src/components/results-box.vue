@@ -1,30 +1,8 @@
 <template>
   <div>
-    <Query :query="searchQuery" :variables="{ query }" v-slot="{ data, execute }">
-      <div v-if="data">
-        <pre>{{data}}</pre>
-        <button @click="execute()">Re-fetch</button>
-      </div>
-    </Query>
-  </div>
-</template>
-
-<script>
-import gql from 'graphql-tag';
-import { Query } from 'vue-gql';
-
-export default {
-  name: 'ResultsBox',
-  props: {
-    query: String
-  },
-  components: {
-    Query
-  },
-  data() {
-    return {
-      searchQuery: gql`
-        query($query:String!) {
+    <ApolloQuery
+      :query="gql => gql`
+        query search ($query:String!) {
           search(query:$query) {
             resultsFound
             results {
@@ -38,32 +16,62 @@ export default {
           }
         }
 
-        fragment person on Person {
-          id
-          name
-        }
+        ${$options.fragments.episode}
+        ${$options.fragments.show}
+        ${$options.fragments.movie}
+        ${$options.fragments.videoGame}
+        ${$options.fragments.person}
+      `"
+      :variables="{ query }"
+    >
+      <template v-slot="{ result: { data } }">
+        <div v-if="data">
+          <pre>{{data}}</pre>
+        </div>
+      </template>
+    </ApolloQuery>
+  </div>
+</template>
 
-        fragment episode on Episode {
-          id
-          name
-        }
+<script>
+import gql from 'graphql-tag';
 
-        fragment videoGame on VideoGame {
+export default {
+  name: 'ResultsBox',
+  props: {
+    query: String
+  },
+  fragments: {
+    episode: gql`
+      fragment episode on Episode {
+        id
+        name
+      }
+    `,
+    person: gql`
+      fragment person on Person {
           id
           name
         }
-
-        fragment show on Show {
+    `,
+    videoGame: gql`
+      fragment videoGame on VideoGame {
           id
           name
         }
-
-        fragment movie on Movie {
+    `,
+    show: gql`
+      fragment show on Show {
           id
           name
         }
-      `
-    };
+    `,
+    movie: gql`
+      fragment movie on Movie {
+          id
+          name
+        }
+    `
   }
 };
 </script>
