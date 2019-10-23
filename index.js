@@ -1,18 +1,21 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { createClient, withProvider } from 'vue-gql';
+import VueApollo from 'vue-apollo';
 import router from './src/router';
+import apolloClient from './src/apollo-client';
 import App from './src/app.vue';
 
 Vue.use(VueRouter);
+Vue.use(VueApollo);
 
-const client = createClient({
-  url: 'http://localhost:5000/graphql'
+const apolloProvider = new VueApollo({
+  defaultClient: apolloClient
 });
 
-const AppWithClient = withProvider(App, client);
-
-new Vue({
+const app = new Vue({
   router,
-  render: h => h(AppWithClient)
+  apolloProvider,
+  render: h => h(App)
 }).$mount('#app');
+
+export default app;
