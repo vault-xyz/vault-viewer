@@ -1,28 +1,19 @@
 <template>
   <div>
-    <search-box v-model="query" v-bind="{ placeholder }"/>
-    <results-box v-bind="{ query }" />
+    <header class="sticky">
+      <router-link :to="{ name: 'home' }" class="logo">LOGO</router-link>
+      <router-link :to="{ name: 'home' }" class="button">Home</router-link>
+      <router-link :to="{ name: 'search' }" class="button">Search</router-link>
+    </header>
+    <div class="container">
+      <router-view />
+    </div>
   </div>
 </template>
 
 <script>
-import {
-  SearchBox,
-  ResultsBox
-} from './components';
-
 export default {
-    name: 'app',
-    components: {
-      SearchBox,
-      ResultsBox
-    },
-    data() {
-      return {
-        query: '',
-        placeholder: 'Search...'
-      };
-    }
+  name: 'app'
 }
 </script>
 
